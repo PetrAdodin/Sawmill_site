@@ -1,0 +1,185 @@
+/* Переменные цветов */
+:root {
+    --color-bg: #faf7f2;        /* тёплый светлый фон */
+    --color-primary: #2c5e2c;    /* тёмно-зелёный (хвоя) */
+    --color-primary-light: #3f7b3f;
+    --color-secondary: #8b5a2b;  /* коричневый (дерево) */
+    --color-text: #2c2c2c;
+    --color-text-light: #555;
+    --color-card-bg: #ffffff;
+    --color-shadow: rgba(0, 0, 0, 0.1);
+    --font-main: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+/* Общие стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-bg);
+    font-family: var(--font-main);
+    color: var(--color-text);
+    line-height: 1.6;
+    padding: 30px 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.container {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Заголовки */
+h1 {
+    color: var(--color-primary);
+    font-size: 2.5rem;
+    margin: 30px 0 20px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+    letter-spacing: 1px;
+    position: relative;
+    display: inline-block;
+}
+
+h1::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+    margin: 10px auto 0;
+    border-radius: 2px;
+}
+
+h2 {
+    color: var(--color-secondary);
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+/* Меню навигации */
+.nav-menu {
+    background-color: var(--color-card-bg);
+    padding: 15px 30px;
+    border-radius: 50px;
+    box-shadow: 0 4px 10px var(--color-shadow);
+    margin-bottom: 40px;
+    display: inline-block;
+}
+
+.nav-menu a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 20px;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+.nav-menu a:hover {
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: 0 2px 8px rgba(44, 94, 44, 0.3);
+}
+
+.nav-menu a:not(:last-child) {
+    margin-right: 5px;
+}
+
+/* Карточки товаров */
+.post-card {
+    background: var(--color-card-bg);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 25px var(--color-shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid rgba(139, 90, 43, 0.1);
+}
+
+.post-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.post-card h2 {
+    margin-top: 0;
+    border-left: 5px solid var(--color-primary);
+    padding-left: 15px;
+}
+
+.post-card p {
+    color: var(--color-text-light);
+    margin: 15px 0;
+    font-size: 1.1rem;
+}
+
+/* Кнопка */
+.btn {
+    display: inline-block;
+    background-color: var(--color-primary);
+    color: white;
+    padding: 10px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: background-color 0.3s, transform 0.2s;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(44, 94, 44, 0.2);
+}
+
+.btn:hover {
+    background-color: var(--color-primary-light);
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(44, 94, 44, 0.3);
+    color: white;
+    text-decoration: none;
+}
+
+/* Разделитель */
+hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-secondary), transparent);
+    margin: 30px 0;
+}
+
+/* Сообщение об отсутствии товаров */
+.empty-message {
+    text-align: center;
+    font-size: 1.2rem;
+    color: var(--color-text-light);
+    background: var(--color-card-bg);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px var(--color-shadow);
+}
+
+/* Страница "О предприятии" */
+.about-content {
+    background: var(--color-card-bg);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 15px 30px var(--color-shadow);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.about-content p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+/* Ссылка "На главную" */
+.back-link {
+    margin-top: 30px;
+    font-size: 1.1rem;
+}

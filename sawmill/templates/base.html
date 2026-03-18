@@ -1,37 +1,10 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{{ title }}{% endblock %}</title>
-    <style>
-        body {
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            color: #2c5e2c;
-            font-size: 36px;
-        }
-        p {
-            font-size: 18px;
-            color: #333;
-        }
-        a {
-            color: #2c5e2c;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        hr {
-            margin: 20px 0;
-            border: 1px solid #ccc;
-        }
-        /* Дополнительные стили можно добавить через блок */
-        {% block extra_css %}{% endblock %}
-    </style>
+    <link type = "text/css" href = "{% static 'lumber/css/style.css' %}" rel = "stylesheet">
 </head>
 <body>
     <!-- Меню (одинаковое на всех страницах) -->

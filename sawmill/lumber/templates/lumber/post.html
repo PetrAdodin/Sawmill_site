@@ -1,4 +1,17 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <div class="post-card">
+        <!-- <h1>{{ post.title }}</h1> -->
+        <p>{{ post.content }}</p>
+        <p><a href="{% url 'home' %}" class="btn">На главную</a></p>
+    </div>
+{% endblock %}
+
+
+<!-- <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -40,4 +53,4 @@
     <p>{{ post.content }}</p>
     <p><a href="{% url 'home' %}">На главную</a></p>
 </body>
-</html>
+</html> -->
