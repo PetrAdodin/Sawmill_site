@@ -29,6 +29,11 @@ posts_db = [
     },
 ]
 
+# Тестовые данные категорий
+cats_db = [{'id': 1, 'name' : 'Доски'},
+           {'id' : 2, 'name' : 'Горбыль'},
+           {'id' : 3, 'name' : 'Брус'}]
+
 def index(request):
     # Отбираем только опубликованные товары
     posts = [p for p in posts_db if p['is_published']]
