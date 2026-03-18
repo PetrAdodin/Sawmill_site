@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{{ title }}{% endblock %}</title>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #2c5e2c;
+            font-size: 36px;
+        }
+        p {
+            font-size: 18px;
+            color: #333;
+        }
+        a {
+            color: #2c5e2c;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        hr {
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+        /* Дополнительные стили можно добавить через блок */
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body>
+    <!-- Меню (одинаковое на всех страницах) -->
+    <p>
+        {% for item in menu %}
+            <a href="{% url item.url_name %}">{{ item.title }}</a>
+            {% if not forloop.last %} | {% endif %}
+        {% endfor %}
+    </p>
+
+    <!-- Заголовок страницы (можно переопределить в дочерних шаблонах) -->
+    <h1>{% block heading %}{{ title }}{% endblock %}</h1>
+
+    <!-- Основное содержимое страницы -->
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

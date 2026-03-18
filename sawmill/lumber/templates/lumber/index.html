@@ -1,54 +1,14 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ title }}</title>
-    <style>
-        body {
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-        }
-        h1 {
-            color: #2c5e2c;
-            font-size: 36px;
-        }
-        p {
-            font-size: 18px;
-            color: #333;
-        }
-        a {
-            color: #2c5e2c;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        hr {
-            margin: 20px 0;
-            border: 1px solid #ccc;
-        }
-    </style>
-</head>
-<body>
-    <!-- Меню (только пункты без аргументов) -->
-    <p>
-        {% for item in menu %}
-            <a href="{% url item.url_name %}">{{ item.title }}</a>
-            {% if not forloop.last %} | {% endif %}
-        {% endfor %}
-    </p>
+{% extends 'base.html' %}
 
-    <h1>{{ title | lower }}</h1>
+{% block title %}Главная страница{% endblock %}
 
-    <!-- Цикл по товарам с проверкой публикации и разделителем -->
+{% block heading %}Главная страница{% endblock %}
+
+{% block content %}
     {% for post in posts %}
         <div>
             <h2>{{ post.title }}</h2>
             <p>{{ post.content }}</p>
-            <!-- Ссылка на детальную страницу с аргументом post.id -->
             <p><a href="{% url 'post' post.id %}">Подробнее</a></p>
             {% if not forloop.last %}
                 <hr>
@@ -57,5 +17,4 @@
     {% empty %}
         <p>В данный момент товаров нет.</p>
     {% endfor %}
-</body>
-</html>
+{% endblock %}
