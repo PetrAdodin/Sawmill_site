@@ -1,5 +1,6 @@
 from django import template
 import lumber.views as views
+from lumber.models import Category
 
 register = template.Library()
 
@@ -9,5 +10,5 @@ def get_categories():
 
 @register.inclusion_tag('lumber/list_categories.html')
 def show_categories():
-    cats = views.cats_db
+    cats = Category.objects.all()
     return {"cats": cats}

@@ -1,14 +1,12 @@
-{% extends 'base.html' %}
-
-{% block content %}
-    {% for post in posts %}
-        <div class="post-card">
-            <h2>{{ post.title }}</h2>
-            <p>{{ post.content }}</p>
-            <p><a href="{% url 'post' post.id %}" class="btn">Подробнее</a></p>
-            {% if not forloop.last %}<hr>{% endif %}
-        </div>
-    {% empty %}
-        <p class="empty-message">В данный момент товаров нет.</p>
-    {% endfor %}
-{% endblock %}
+{% for post in posts %}
+    <div class="post-card">
+        <h2>{{ post.title }}</h2>
+        <p>Категория: {{ post.category.name }}</p>
+        <p>Цена: {{ post.price }} руб.</p>
+        <p>{{ post.content|truncatewords:20 }}</p>
+        <p><a href="{{ post.get_absolute_url }}" class="btn">Подробнее</a></p>
+        {% if not forloop.last %}<hr>{% endif %}
+    </div>
+{% empty %}
+    <p class="empty-message">В данный момент товаров нет.</p>
+{% endfor %}

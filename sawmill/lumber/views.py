@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
+from .models import Product, Category
 
 # Меню теперь содержит только пункты без аргументов
 menu = [
@@ -35,8 +36,8 @@ cats_db = [{'id': 1, 'name' : 'Доски'},
            {'id' : 3, 'name' : 'Брус'}]
 
 def index(request):
-    # Отбираем только опубликованные товары
-    posts = [p for p in posts_db if p['is_published']]
+    # Получаем все опубликованные товары из БД
+    posts = Product.published.all().select_related('category')
     context = {
         'title': 'Главная страница',
         'menu': menu,
@@ -51,25 +52,25 @@ def about(request):
     }
     return render(request, 'lumber/about.html', context)
 
-def show_post(request, post_id):
-    """Страница отдельного товара"""
-    # Ищем товар по id (упрощённо, без БД)
-    post = next((p for p in posts_db if p['id'] == post_id), None)
-    if not post:
-        raise Http404("Товар не найден")
+def show_post(request, product_slug):
+    post = get_object_or_404(Product.published, slug=product_slug)
     context = {
-        'title': post['title'],
+        'title': post.title,
         'menu': menu,
         'post': post,
     }
     return render(request, 'lumber/post.html', context)
 
-# Остальные функции (catigories, archive и т.д.) остаются без изменений
-def catigories(request, cat_id):
-    return HttpResponse(f"<h1>Пиломатериал по категориям</h1><p>id: {cat_id}</p>")
-
-def catigories_by_slug(request, cat_slug):
-    return HttpResponse(f"<h1>Пиломатериал по категориям</h1><p>slug:{cat_slug}</p>")
+def category_detail(request, cat_slug):
+    category = get_object_or_404(Category, slug=cat_slug)
+    posts = Product.published.filter(category=category).select_related('category')
+    context = {
+        'title': f'Категория: {category.name}',
+        'menu': menu,
+        'posts': posts,
+        'cat_selected': category.id,
+    }
+    return render(request, 'lumber/index.html', context)
 
 def archive(request, year):
     if year > 2026:
