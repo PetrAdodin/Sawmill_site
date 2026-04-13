@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<h2>Результаты выполнения запросов</h2>
+
+<h3>1. first(), last()</h3>
+<p>Первый товар: {{ results.first_product }}</p>
+<p>Последний товар (по pk): {{ results.last_product }}</p>
+
+<h3>2. latest(), earliest() (по time_update)</h3>
+<p>Самый новый товар: {{ results.latest_product }}</p>
+<p>Самый старый товар: {{ results.earliest_product }}</p>
+
+<h3>3. get_previous_by_time_update(), get_next_by_time_update() (для товара pk=2)</h3>
+<p>Предыдущий по времени: {{ results.prev_by_time }}</p>
+<p>Следующий по времени: {{ results.next_by_time }}</p>
+
+<h3>4. exists(), count()</h3>
+<p>Существует ли категория со слагом 'wood'? {{ results.cat_exists }}</p>
+<p>Общее количество товаров: {{ results.products_count }}</p>
+
+<h3>5. Класс Q (OR, AND, NOT)</h3>
+<p>Товары с ценой >1000 ИЛИ категория содержит 'пиломатериалы': {{ results.q_or_products|length }} шт.</p>
+<p>Товары с ценой <500 И опубликованные: {{ results.q_and_products|length }} шт.</p>
+<p>Товары, категория которых не 'Доска': {{ results.q_not_products|length }} шт.</p>
+
+<h3>6. Класс F (сравнение id > price)</h3>
+<p>Товары, у которых id больше price: {{ results.f_products|length }} шт.</p>
+
+<h3>7. Класс Value в annotate()</h3>
+<p>Поставщики с добавленным полем is_active=True: {{ results.annotated_suppliers|length }} записей</p>
+
+<h3>8. Агрегирующие функции</h3>
+<p>Минимальная цена: {{ results.min_price.price__min }}</p>
+<p>Максимальная цена: {{ results.max_price.price__max }}</p>
+<p>Сумма всех цен: {{ results.sum_price.price__sum }}</p>
+<p>Средняя цена: {{ results.avg_price.price__avg }}</p>
+<p>Общее количество товаров (через Count): {{ results.total_products.total }}</p>
+
+<h3>9. Группировка записей</h3>
+<p>Категории с количеством товаров >0:</p>
+<ul>
+    {% for cat in results.grouped_categories %}
+        <li>{{ cat.name }}: {{ cat.total_products }} товаров</li>
+    {% endfor %}
+</ul>
+<p>Теги с количеством товаров >0:</p>
+<ul>
+    {% for tag in results.grouped_tags %}
+        <li>{{ tag.name }}: {{ tag.total_products }} товаров</li>
+    {% endfor %}
+</ul>
+
+<h3>10. Вычисления на стороне СУБД (длина названия)</h3>
+<ul>
+    {% for item in results.title_lengths %}
+        <li>{{ item.title }} — длина названия: {{ item.title_len }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
