@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Product, Category
+from .models import Product, Category, Tag
 
 menu = [
     {'title': 'Главная', 'url_name': 'home'},
@@ -40,6 +40,17 @@ def category_detail(request, cat_slug):
         'menu': menu,
         'posts': posts,
         'cat_selected': category.id,
+    }
+    return render(request, 'lumber/index.html', context)
+
+def tag_detail(request, tag_slug):
+    tag = get_object_or_404(Tag, slug=tag_slug)
+    posts = tag.products.filter(is_published=Product.Status.PUBLISHED).select_related('category')
+    context = {
+        'title': f'Тег: {tag.name}',
+        'menu': menu,
+        'posts': posts,
+        'tag_selected': tag.id,
     }
     return render(request, 'lumber/index.html', context)
 
