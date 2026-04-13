@@ -10,22 +10,6 @@
 <body>
     <!-- Меню (одинаковое на всех страницах) -->
     <p>
-        <!--
-        {% for item in menu %}
-            <a href="{% url item.url_name %}">{{ item.title }}</a>
-            {% if not forloop.last %} | {% endif %}
-        {% endfor %}
-        -->
-
-        <!--
-        {% get_categories as categories%}
-
-        {% for category in categories %}
-            <a>{{ category.name }}</a>
-            {% if not forloop.last %} | {% endif %}
-        {% endfor %}
-        -->
-
         {% show_categories %}
     </p>
 

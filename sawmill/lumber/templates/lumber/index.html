@@ -4,7 +4,7 @@
         <p>Категория: {{ post.category.name }}</p>
         <p>Цена: {{ post.price }} руб.</p>
         <p>{{ post.content|truncatewords:20 }}</p>
-        <p><a href="{{ post.get_absolute_url }}" class="btn">Подробнее</a></p>
+        <a href="{{ post.get_absolute_url }}" class="btn">Подробнее</a>
         {% if not forloop.last %}<hr>{% endif %}
     </div>
 {% empty %}

@@ -2,41 +2,12 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Product, Category
 
-# Меню теперь содержит только пункты без аргументов
 menu = [
     {'title': 'Главная', 'url_name': 'home'},
     {'title': 'О предприятии', 'url_name': 'about'},
 ]
 
-# Тестовые данные товаров
-posts_db = [
-    {
-        'id': 1,
-        'title': 'Доска обрезная 25х100',
-        'content': 'Доска обрезная, сорт 1, длина 6 м.',
-        'is_published': True,
-    },
-    {
-        'id': 2,
-        'title': 'Брус 150х150',
-        'content': 'Брус строганный, камерная сушка.',
-        'is_published': True,
-    },
-    {
-        'id': 3,
-        'title': 'Вагонка штиль',
-        'content': 'Липа, сорт Экстра, 14х96 мм.',
-        'is_published': False,
-    },
-]
-
-# Тестовые данные категорий
-cats_db = [{'id': 1, 'name' : 'Доски'},
-           {'id' : 2, 'name' : 'Горбыль'},
-           {'id' : 3, 'name' : 'Брус'}]
-
 def index(request):
-    # Получаем все опубликованные товары из БД
     posts = Product.published.all().select_related('category')
     context = {
         'title': 'Главная страница',

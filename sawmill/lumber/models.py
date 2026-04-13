@@ -68,11 +68,10 @@ class Product(models.Model):
     time_update = models.DateTimeField(auto_now=True, verbose_name="Время изменения")
     is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT, verbose_name="Статус")
 
-    # Связи
+    # Связи (все три типа)
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products', verbose_name="Категория")
     tags = models.ManyToManyField(Tag, blank=True, related_name='products', verbose_name="Теги")
-    supplier = models.OneToOneField(Supplier, on_delete=models.SET_NULL, null=True, blank=True,
-                                    verbose_name="Поставщик")
+    supplier = models.OneToOneField(Supplier, on_delete=models.SET_NULL, null=True, blank=True, verbose_name="Поставщик")
 
     # Менеджеры
     objects = models.Manager()
