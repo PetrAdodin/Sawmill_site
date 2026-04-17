@@ -1,0 +1,35 @@
+/* Стили для админ-панели в соответствии с оформлением сайта */
+#header {
+    background: #2c3e50;
+    color: white;
+}
+
+#header a:link, #header a:visited {
+    color: white;
+}
+
+.module caption {
+    background: #34495e;
+}
+
+div.breadcrumbs {
+    background: #1abc9c;
+}
+
+.button, input[type=submit], input[type=button], .submit-row input, a.button {
+    background: #1abc9c;
+}
+
+.button:hover, input[type=submit]:hover, input[type=button]:hover {
+    background: #16a085;
+}
+
+/* Цвет ссылок */
+a:link, a:visited {
+    color: #2c3e50;
+}
+
+/* Панель поиска */
+#changelist-search input[type=submit] {
+    background: #2c3e50;
+}
