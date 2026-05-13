@@ -3,20 +3,47 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-    <div class="post-card">
-        {% with post.tags.all as tags %}
-            {% if tags %}
-                <div class="post-tags">
-                    <strong>Теги:</strong>
-                    <ul class="tags-list">
-                        {% for t in tags %}
-                            <li><a href="{{ t.get_absolute_url }}">{{ t.name }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
-        {% endwith %}
-        <p>{{ post.content }}</p>
-        <p><a href="{% url 'home' %}" class="btn">На главную</a></p>
+<article class="post-detail">
+    {% if post.photo %}
+        <p>
+            <img class="img-article-left" src="{{ post.photo.url }}" alt="{{ post.title }}">
+        </p>
+    {% endif %}
+
+    {% if post.price %}
+        <p>
+            <strong>Цена:</strong> {{ post.price }} руб.
+        </p>
+    {% endif %}
+
+    <p>
+        <strong>Категория:</strong>
+        <a href="{{ post.category.get_absolute_url }}">{{ post.category.name }}</a>
+    </p>
+
+    {% if post.supplier %}
+        <p>
+            <strong>Поставщик:</strong> {{ post.supplier.name }}
+        </p>
+    {% endif %}
+
+    {% with post.tags.all as tags %}
+        {% if tags %}
+            <p>
+                <strong>Теги:</strong>
+                {% for tag in tags %}
+                    <a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        {% endif %}
+    {% endwith %}
+
+    <div class="post-content">
+        {{ post.content|linebreaks }}
     </div>
+
+    <p class="back-link">
+        <a href="{% url 'home' %}" class="btn">На главную</a>
+    </p>
+</article>
 {% endblock %}

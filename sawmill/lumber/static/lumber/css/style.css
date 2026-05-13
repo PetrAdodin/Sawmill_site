@@ -1,14 +1,17 @@
 /* Переменные цветов */
 :root {
-    --color-bg: #faf7f2;        /* тёплый светлый фон */
-    --color-primary: #2c5e2c;    /* тёмно-зелёный (хвоя) */
+    --color-bg: #faf7f2;
+    --color-primary: #2c5e2c;
     --color-primary-light: #3f7b3f;
-    --color-secondary: #8b5a2b;  /* коричневый (дерево) */
+    --color-secondary: #8b5a2b;
     --color-text: #2c2c2c;
     --color-text-light: #555;
     --color-card-bg: #ffffff;
     --color-shadow: rgba(0, 0, 0, 0.1);
-    --font-main: 'Segoe UI', Roboto, Arial, sans-serif;
+    --color-error: #b00020;
+    --color-success-bg: #e8f5e9;
+    --color-success-text: #1b5e20;
+    --font-main: "Segoe UI", Roboto, Arial, sans-serif;
 }
 
 /* Общие стили */
@@ -41,14 +44,14 @@ h1 {
     color: var(--color-primary);
     font-size: 2.5rem;
     margin: 30px 0 20px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
     letter-spacing: 1px;
     position: relative;
     display: inline-block;
 }
 
 h1::after {
-    content: '';
+    content: "";
     display: block;
     width: 80px;
     height: 4px;
@@ -63,13 +66,18 @@ h2 {
     margin-bottom: 15px;
 }
 
+h3 {
+    color: var(--color-primary);
+    margin-bottom: 10px;
+}
+
 /* Меню навигации */
 .nav-menu {
     background-color: var(--color-card-bg);
     padding: 15px 30px;
     border-radius: 50px;
     box-shadow: 0 4px 10px var(--color-shadow);
-    margin-bottom: 40px;
+    margin-bottom: 30px;
     display: inline-block;
 }
 
@@ -92,6 +100,28 @@ h2 {
     margin-right: 5px;
 }
 
+/* Боковая область */
+.sidebar {
+    background: var(--color-card-bg);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 5px 15px var(--color-shadow);
+}
+
+.sidebar-section:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    color: var(--color-secondary);
+    text-decoration: none;
+}
+
+.sidebar a:hover {
+    text-decoration: underline;
+}
+
 /* Карточки товаров */
 .post-card {
     background: var(--color-card-bg);
@@ -101,6 +131,7 @@ h2 {
     box-shadow: 0 10px 25px var(--color-shadow);
     transition: transform 0.2s, box-shadow 0.2s;
     border: 1px solid rgba(139, 90, 43, 0.1);
+    overflow: hidden;
 }
 
 .post-card:hover {
@@ -120,11 +151,44 @@ h2 {
     font-size: 1.1rem;
 }
 
+.post-card a,
+.post-detail a {
+    color: var(--color-secondary);
+}
+
+.post-detail {
+    background: var(--color-card-bg);
+    border-radius: 25px;
+    padding: 35px;
+    box-shadow: 0 10px 25px var(--color-shadow);
+    overflow: hidden;
+}
+
+.post-content {
+    margin-top: 20px;
+    font-size: 1.1rem;
+}
+
+/* Изображения */
+.img-article-left {
+    max-width: 360px;
+    width: 100%;
+    height: auto;
+    float: left;
+    margin: 0 25px 20px 0;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px var(--color-shadow);
+}
+
+.img-article-left.thumb {
+    max-width: 220px;
+}
+
 /* Кнопка */
 .btn {
     display: inline-block;
     background-color: var(--color-primary);
-    color: white;
+    color: white !important;
     padding: 10px 25px;
     border-radius: 30px;
     text-decoration: none;
@@ -178,8 +242,125 @@ hr {
     margin-bottom: 20px;
 }
 
+/* Формы */
+.form-card {
+    background: var(--color-card-bg);
+    border-radius: 30px;
+    padding: 35px;
+    box-shadow: 0 15px 30px var(--color-shadow);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.form-description {
+    color: var(--color-text-light);
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
+
+.site-form {
+    margin-top: 20px;
+}
+
+.form-row {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+}
+
+.form-input,
+.site-form input[type="text"],
+.site-form input[type="number"],
+.site-form input[type="email"],
+.site-form input[type="file"],
+.site-form textarea,
+.site-form select {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px 14px;
+    border: 1px solid rgba(139, 90, 43, 0.35);
+    border-radius: 12px;
+    background: #fff;
+    color: var(--color-text);
+    font-family: var(--font-main);
+    font-size: 1rem;
+}
+
+.site-form input[type="checkbox"] {
+    width: auto;
+    margin-left: 5px;
+}
+
+.site-form select[multiple] {
+    min-height: 120px;
+}
+
+.form-help {
+    margin-top: 6px;
+    font-size: 0.95rem;
+    color: var(--color-text-light);
+}
+
+.form-error {
+    color: var(--color-error);
+    margin-top: 6px;
+    font-size: 0.95rem;
+}
+
+.form-error ul {
+    margin-left: 20px;
+}
+
+.success-message {
+    background: var(--color-success-bg);
+    color: var(--color-success-text);
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin: 20px 0;
+    font-weight: 600;
+}
+
 /* Ссылка "На главную" */
 .back-link {
     margin-top: 30px;
     font-size: 1.1rem;
+}
+
+/* Адаптивность */
+@media (max-width: 700px) {
+    body {
+        padding: 20px 12px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .nav-menu {
+        border-radius: 20px;
+        display: block;
+    }
+
+    .nav-menu a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    .img-article-left,
+    .img-article-left.thumb {
+        float: none;
+        max-width: 100%;
+        margin: 0 0 20px 0;
+    }
+
+    .about-content,
+    .form-card,
+    .post-detail {
+        padding: 24px;
+    }
 }

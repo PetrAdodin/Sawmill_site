@@ -20,7 +20,7 @@ class Category(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('category', kwargs={'cat_slug': self.slug})
+        return reverse("category", kwargs={"cat_slug": self.slug})
 
 
 class Tag(models.Model):
@@ -35,7 +35,7 @@ class Tag(models.Model):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('tag', kwargs={'tag_slug': self.slug})
+        return reverse("tag", kwargs={"tag_slug": self.slug})
 
 
 class Supplier(models.Model):
@@ -54,24 +54,62 @@ class Supplier(models.Model):
 
 class Product(models.Model):
     class Status(models.IntegerChoices):
-        DRAFT = 0, 'Черновик'
-        PUBLISHED = 1, 'Опубликовано'
+        DRAFT = 0, "Черновик"
+        PUBLISHED = 1, "Опубликовано"
 
     title = models.CharField(max_length=255, verbose_name="Название")
-    slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL",
-                            validators=[MinLengthValidator(5), MaxLengthValidator(100)])
+    slug = models.SlugField(
+        max_length=255,
+        unique=True,
+        db_index=True,
+        verbose_name="URL",
+        validators=[
+            MinLengthValidator(5),
+            MaxLengthValidator(100),
+        ],
+    )
     content = models.TextField(blank=True, verbose_name="Описание")
-    photo = models.ImageField(upload_to="products/%Y/%m/%d/", blank=True, null=True, verbose_name="Фото")
-    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True, verbose_name="Цена")
+    photo = models.ImageField(
+        upload_to="products/%Y/%m/%d/",
+        blank=True,
+        null=True,
+        verbose_name="Фото",
+    )
+    price = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True,
+        verbose_name="Цена",
+    )
     time_create = models.DateTimeField(auto_now_add=True, verbose_name="Время создания")
     time_update = models.DateTimeField(auto_now=True, verbose_name="Время изменения")
-    is_published = models.BooleanField(choices=Status.choices, default=Status.DRAFT, verbose_name="Статус")
+    is_published = models.BooleanField(
+        choices=Status.choices,
+        default=Status.DRAFT,
+        verbose_name="Статус",
+    )
 
-    # Связи
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='products', verbose_name="Категория")
-    tags = models.ManyToManyField(Tag, blank=True, related_name='products', verbose_name="Теги")
-    supplier = models.OneToOneField(Supplier, on_delete=models.SET_NULL, null=True, blank=True,
-                                    verbose_name="Поставщик")
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.PROTECT,
+        related_name="products",
+        verbose_name="Категория",
+    )
+    tags = models.ManyToManyField(
+        Tag,
+        blank=True,
+        related_name="products",
+        verbose_name="Теги",
+    )
+    supplier = models.ForeignKey(
+        Supplier,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="products",
+        verbose_name="Поставщик",
+    )
 
     objects = models.Manager()
     published = PublishedManager()
@@ -79,11 +117,27 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Товар"
         verbose_name_plural = "Товары"
-        ordering = ['-time_create']
-        indexes = [models.Index(fields=['-time_create'])]
+        ordering = ["-time_create"]
+        indexes = [
+            models.Index(fields=["-time_create"]),
+        ]
 
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('product', kwargs={'product_slug': self.slug})
+        return reverse("product", kwargs={"product_slug": self.slug})
+
+
+class UploadedFile(models.Model):
+    file = models.FileField(upload_to="uploads_model/%Y/%m/%d/", verbose_name="Файл")
+    original_name = models.CharField(max_length=255, verbose_name="Исходное имя файла")
+    uploaded_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата загрузки")
+
+    class Meta:
+        verbose_name = "Загруженный файл"
+        verbose_name_plural = "Загруженные файлы"
+        ordering = ["-uploaded_at"]
+
+    def __str__(self):
+        return self.original_name
