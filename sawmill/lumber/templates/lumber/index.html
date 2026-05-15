@@ -1,51 +1,70 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ title }}{% endblock %}
-
 {% block content %}
-{% for post in posts %}
-    <article class="post-card">
-        {% if post.photo %}
-            <p>
-                <img class="img-article-left thumb" src="{{ post.photo.url }}" alt="{{ post.title }}">
-            </p>
-        {% endif %}
-
-        <h2>{{ post.title }}</h2>
-
-        <p>
-            <strong>Категория:</strong>
-            <a href="{{ post.category.get_absolute_url }}">{{ post.category.name }}</a>
-        </p>
-
-        {% if post.price %}
-            <p>
-                <strong>Цена:</strong> {{ post.price }} руб.
-            </p>
-        {% endif %}
-
-        {% with post.tags.all as tags %}
-            {% if tags %}
-                <p>
-                    <strong>Теги:</strong>
-                    {% for tag in tags %}
-                        <a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
-                    {% endfor %}
-                </p>
+    {% for post in posts %}
+        <article class="post-card">
+            {% if post.photo %}
+                <img src="{{ post.photo.url }}" alt="{{ post.title }}" class="img-article-left thumb">
             {% endif %}
-        {% endwith %}
 
-        <p>
-            {{ post.content|truncatewords:20 }}
-        </p>
+            <h2>{{ post.title }}</h2>
 
-        <p>
-            <a href="{{ post.get_absolute_url }}" class="btn">Подробнее</a>
-        </p>
-    </article>
-{% empty %}
-    <div class="empty-message">
-        В данный момент товаров нет.
-    </div>
-{% endfor %}
+            <p>Категория: <a href="{{ post.category.get_absolute_url }}">{{ post.category.name }}</a></p>
+
+            {% if post.price %}
+                <p>Цена: {{ post.price }} руб.</p>
+            {% endif %}
+
+            {% if post.supplier %}
+                <p>Поставщик: {{ post.supplier.name }}</p>
+            {% endif %}
+
+            {% with post.tags.all as tags %}
+                {% if tags %}
+                    <p>
+                        Теги:
+                        {% for tag in tags %}
+                            <a href="{{ tag.get_absolute_url }}">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+                        {% endfor %}
+                    </p>
+                {% endif %}
+            {% endwith %}
+
+            <p>{{ post.content|truncatewords:20 }}</p>
+
+            <a class="btn" href="{{ post.get_absolute_url }}">Подробнее</a>
+        </article>
+    {% empty %}
+        <div class="empty-message">В данный момент товаров нет.</div>
+    {% endfor %}
+{% endblock %}
+
+{% block navigation %}
+    {% if page_obj.has_other_pages %}
+        <nav class="list-pages">
+            <ul>
+                {% if page_obj.has_previous %}
+                    <li class="page-num">
+                        <a href="?page={{ page_obj.previous_page_number }}">&lt;</a>
+                    </li>
+                {% endif %}
+
+                {% for p in paginator.page_range %}
+                    {% if page_obj.number == p %}
+                        <li class="page-num page-num-selected">{{ p }}</li>
+                    {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+                        <li class="page-num">
+                            <a href="?page={{ p }}">{{ p }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-num">
+                        <a href="?page={{ page_obj.next_page_number }}">&gt;</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+    {% endif %}
 {% endblock %}

@@ -1,4 +1,3 @@
-/* Переменные цветов */
 :root {
     --color-bg: #faf7f2;
     --color-primary: #2c5e2c;
@@ -14,7 +13,6 @@
     --font-main: "Segoe UI", Roboto, Arial, sans-serif;
 }
 
-/* Общие стили */
 * {
     margin: 0;
     padding: 0;
@@ -39,7 +37,6 @@ body {
     margin: 0 auto;
 }
 
-/* Заголовки */
 h1 {
     color: var(--color-primary);
     font-size: 2.5rem;
@@ -71,7 +68,6 @@ h3 {
     margin-bottom: 10px;
 }
 
-/* Меню навигации */
 .nav-menu {
     background-color: var(--color-card-bg);
     padding: 15px 30px;
@@ -100,7 +96,6 @@ h3 {
     margin-right: 5px;
 }
 
-/* Боковая область */
 .sidebar {
     background: var(--color-card-bg);
     border-radius: 20px;
@@ -122,7 +117,6 @@ h3 {
     text-decoration: underline;
 }
 
-/* Карточки товаров */
 .post-card {
     background: var(--color-card-bg);
     border-radius: 20px;
@@ -169,7 +163,6 @@ h3 {
     font-size: 1.1rem;
 }
 
-/* Изображения */
 .img-article-left {
     max-width: 360px;
     width: 100%;
@@ -184,7 +177,6 @@ h3 {
     max-width: 220px;
 }
 
-/* Кнопка */
 .btn {
     display: inline-block;
     background-color: var(--color-primary);
@@ -208,7 +200,6 @@ h3 {
     text-decoration: none;
 }
 
-/* Разделитель */
 hr {
     border: none;
     height: 1px;
@@ -216,7 +207,6 @@ hr {
     margin: 30px 0;
 }
 
-/* Сообщение об отсутствии товаров */
 .empty-message {
     text-align: center;
     font-size: 1.2rem;
@@ -227,7 +217,6 @@ hr {
     box-shadow: 0 5px 15px var(--color-shadow);
 }
 
-/* Страница "О предприятии" */
 .about-content {
     background: var(--color-card-bg);
     border-radius: 30px;
@@ -242,7 +231,6 @@ hr {
     margin-bottom: 20px;
 }
 
-/* Формы */
 .form-card {
     background: var(--color-card-bg);
     border-radius: 30px;
@@ -325,13 +313,64 @@ hr {
     font-weight: 600;
 }
 
-/* Ссылка "На главную" */
 .back-link {
     margin-top: 30px;
     font-size: 1.1rem;
 }
 
-/* Адаптивность */
+.post-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 22px;
+}
+
+.list-pages {
+    margin: 10px 0 30px;
+    text-align: center;
+}
+
+.list-pages ul {
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+}
+
+.page-num {
+    min-width: 42px;
+    text-align: center;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: var(--color-card-bg);
+    box-shadow: 0 2px 8px var(--color-shadow);
+    color: var(--color-text);
+}
+
+.page-num a {
+    color: var(--color-text);
+    text-decoration: none;
+    display: block;
+}
+
+.page-num:hover {
+    background-color: var(--color-primary-light);
+    color: white;
+}
+
+.page-num:hover a {
+    color: white;
+}
+
+.page-num-selected {
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 700;
+}
+
 @media (max-width: 700px) {
     body {
         padding: 20px 12px;

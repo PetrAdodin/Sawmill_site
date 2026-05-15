@@ -1,57 +1,43 @@
 {% extends 'base.html' %}
 
-{% block title %}О предприятии{% endblock %}
-
 {% block content %}
-<div class="about-content">
-    <p>
-        Наше предприятие занимается производством и продажей пиломатериалов высокого качества.
-    </p>
+    <div class="about-content">
+        <p>Наше предприятие занимается производством и продажей пиломатериалов высокого качества.</p>
+        <p>Мы работаем на рынке более 10 лет и гарантируем надёжность и долговечность нашей продукции.</p>
 
-    <p>
-        Мы работаем на рынке более 10 лет и гарантируем надёжность и долговечность нашей продукции.
-    </p>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="success-message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
 
-    <h2>Загрузка файла на сервер</h2>
+        <h2>Загрузка файла на сервер</h2>
+        <p class="form-description">
+            Эта форма демонстрирует загрузку произвольного файла на сервер. Имя файла на сервере дополняется случайным UUID, поэтому файлы с одинаковыми исходными именами не перезаписывают друг друга.
+        </p>
 
-    <p>
-        Эта форма демонстрирует загрузку произвольного файла на сервер.
-        Имя файла на сервере дополняется случайным UUID, поэтому файлы с одинаковыми
-        исходными именами не перезаписывают друг друга.
-    </p>
-
-    {% if upload_message %}
-        <div class="success-message">
-            {{ upload_message }}
-        </div>
-    {% endif %}
-
-    <form action="" method="post" enctype="multipart/form-data" class="site-form">
-        {% csrf_token %}
-
-        <div class="form-error">
+        <form method="post" enctype="multipart/form-data" class="site-form">
+            {% csrf_token %}
             {{ form.non_field_errors }}
-        </div>
 
-        {% for field in form %}
-            <div class="form-row">
-                <label class="form-label" for="{{ field.id_for_label }}">
-                    {{ field.label }}:
-                </label>
-
-                {{ field }}
-
-                <div class="form-error">
-                    {{ field.errors }}
+            {% for field in form %}
+                <div class="form-row">
+                    <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.help_text %}
+                        <div class="form-help">{{ field.help_text }}</div>
+                    {% endif %}
+                    {% for error in field.errors %}
+                        <div class="form-error">{{ error }}</div>
+                    {% endfor %}
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
 
-        <button type="submit" class="btn">Отправить</button>
-    </form>
+            <button type="submit" class="btn">{{ button_text }}</button>
+        </form>
 
-    <p class="back-link">
-        <a href="{% url 'home' %}" class="btn">На главную</a>
-    </p>
-</div>
+        <div class="back-link">
+            <a class="btn" href="{% url 'home' %}">На главную</a>
+        </div>
+    </div>
 {% endblock %}
